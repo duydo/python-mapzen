@@ -52,7 +52,6 @@ This software is licensed under the Apache License, version 2 ("ALv2"), quoted b
 
 Copyright 2016 Duy Do
 
-
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
 the License at
