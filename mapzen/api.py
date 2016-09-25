@@ -14,11 +14,7 @@ def check_not_empty(reference, message=None):
 
 
 class MapzenAPI(object):
-    """
-    MapzenAPI provides an implementation for search, reverse and autocomplete endpoint.
-    Mapzen document https://mapzen.com/documentation/search/
-    """
-
+    """Python Client for Mapzen APIs"""
     DEFAULT_VERSION = 'v1'
     BASE_URL = 'https://search.mapzen.com'
     BASE_PARAMS = ('sources', 'layers', 'boundary_country')
@@ -69,12 +65,12 @@ class MapzenAPI(object):
                 focus_point_lon: The longitude for places with higher scores will appear higher in the results list
                 sources: A comma-delimited string array, such as: openstreetmap, openaddresses, whosonfirst, geonames
                 layers: A comma-delimited string array, such as: venue, address, street, country, macroregion, region, macrocounty, county, locality, localadmin, borough, neighbourhood, coarse
-            Returns:
-                GeoJSON
-            Throws:
-                ValueError if input param value is invalid
-                MapzenRateLimitError if rate limit exceeded
-                MapzenError if any error occurs, excepts above errors
+        Returns:
+            GeoJSON
+        Throws:
+            ValueError if input param value is invalid
+            MapzenRateLimitError if rate limit exceeded
+            MapzenError if any error occurs, excepts above errors
         """
         kwargs['text'] = check_not_empty(text)
         return self._make_request(
