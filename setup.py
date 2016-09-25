@@ -6,7 +6,7 @@ __author__ = 'duydo'
 setup(
     name='mapzen',
     version='0.1',
-    description='Mapzen Python API',
+    description='Python Client for Mapzen APIs',
     license='ALv2',
     author='Duy Do',
     author_email='doquocduy@gmail.com',

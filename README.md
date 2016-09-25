@@ -1,5 +1,5 @@
-Python Client for Mapzen API
-============================
+Python Client for Mapzen APIs
+=============================
 
 A Python client for the Mapzen APIs.
 

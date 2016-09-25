@@ -47,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="exceptions.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="exceptions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mapzen/exceptions.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
@@ -91,8 +91,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="84">
-                <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="29" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -113,11 +113,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+            <state relative-caret-position="168">
+              <caret line="8" column="46" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -139,11 +139,11 @@
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/mapzen.py" />
         <option value="$PROJECT_DIR$/examples.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/mapzen/api.py" />
         <option value="$PROJECT_DIR$/mapzen/exceptions.py" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -615,14 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mapzen/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -649,11 +641,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mapzen/exceptions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="84">
-            <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="29" />
             <folding />
           </first_editor>
           <second_editor />
@@ -663,10 +663,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mapzen/exceptions.py">
+    <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="168">
+          <caret line="8" column="46" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
           <folding />
         </state>
       </provider>
