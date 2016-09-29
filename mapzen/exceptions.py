@@ -2,7 +2,7 @@ __author__ = 'duydo'
 
 
 class MapzenError(Exception):
-    """MapzenError exception"""
+    """MapzenError exception."""
 
     def __init__(self, reason=None, status_code=None, response=None):
         self.reason = reason
@@ -16,4 +16,9 @@ class MapzenError(Exception):
 
 class MapzenRateLimitError(MapzenError):
     """Exception for Mapzen hitting the rate limit."""
+    pass
+
+
+class MapzenKeyError(MapzenError):
+    """Exception for Mapzen API key error."""
     pass

@@ -2,7 +2,7 @@ import json
 from urllib import urlencode
 from urllib2 import Request, urlopen, HTTPError
 
-from mapzen.exceptions import MapzenError, MapzenRateLimitError
+from mapzen.exceptions import MapzenError, MapzenRateLimitError, MapzenKeyError
 
 __author__ = 'duydo'
 
@@ -67,7 +67,7 @@ class MapzenAPI(object):
                 layers: A comma-delimited string array, such as: venue, address, street, country, macroregion, region, macrocounty, county, locality, localadmin, borough, neighbourhood, coarse
         Returns:
             GeoJSON
-        Throws:
+        Raises:
             ValueError if input param value is invalid
             MapzenRateLimitError if rate limit exceeded
             MapzenError if any error occurs, excepts above errors
@@ -92,7 +92,7 @@ class MapzenAPI(object):
                 layers: A comma-delimited string array, such as: venue, address, street, country, macroregion, region, macrocounty, county, locality, localadmin, borough, neighbourhood, coarse
         Returns:
             GeoJSON
-        Throws:
+        Raises:
             ValueError if input param value is invalid
             MapzenRateLimitError if rate limit exceeded
             MapzenError if any error occurs, excepts above errors
@@ -126,7 +126,7 @@ class MapzenAPI(object):
                 layers: A comma-delimited string array, such as: venue, address, street, country, macroregion, region, macrocounty, county, locality, localadmin, borough, neighbourhood, coarse
         Returns:
             GeoJSON
-        Throws:
+        Raises:
             ValueError if input param value is invalid
             MapzenRateLimitError if rate limit exceeded
             MapzenError if any error occurs, excepts above errors
@@ -159,13 +159,17 @@ class MapzenAPI(object):
         _params = {'api_key': self.api_key}
         for k, v in params.iteritems():
             if k in allowed_params:
-                _params[k.replace('_', '.')] = v
+                _params[k.replace('_', '.')] = v.encode('utf-8') if isinstance(v, unicode) else v
         return _params
+
+    def _prepare_request(self, endpoint, params):
+        request = Request('%s?%s' % (endpoint, urlencode(params)))
+        request.add_header('X-Cache', self.x_cache)
+        return request
 
     def _make_request(self, endpoint, params):
         try:
-            request = Request('%s/?%s' % (endpoint, urlencode(params)))
-            request.add_header('X-Cache', self.x_cache)
+            request = self._prepare_request(endpoint, params)
             response = urlopen(request)
             return json.loads(response.read(), encoding='utf-8')
         except HTTPError as e:
@@ -180,6 +184,7 @@ class MapzenAPI(object):
         if 400 <= status_code < 500:
             if status_code == 403:
                 reason = '%s Forbidden: %s for url: %s' % (status_code, e.reason, e.geturl())
+                raise MapzenKeyError(reason, status_code=status_code)
             elif status_code == 429:
                 reason = '%s Too Many Requests: %s for url: %s' % (status_code, e.reason, e.geturl())
                 raise MapzenRateLimitError(reason, status_code=status_code)
