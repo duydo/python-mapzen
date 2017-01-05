@@ -41,9 +41,18 @@ r = api.search(
 # Reverse geocoding
 r = api.reverse(48.858268, 2.294471)
 
-
-# Autocomeplete
+# Autocomplete
 r = api.autocomplete('Ho Chi Minh')
+
+# Expand an address (remove abbreviations, possibly with multiple ambiguities - for example, St may expand to either Street or Saint)
+r = api.expand('475 Sansome St San Francisco CA')
+
+# Parse an address
+r = api.parse('475 Sansome St San Francisco CA')
+
+# Parse an address, and get the results in a simple dictionary
+r = api.parse('475 Sansome St San Francisco CA', format='keys')
+
 ```
 
 ## Licence
