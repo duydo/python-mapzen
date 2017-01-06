@@ -16,14 +16,16 @@ def check_not_empty(reference, message=None):
 class MapzenAPI(object):
     """Python Client for Mapzen APIs"""
     DEFAULT_VERSION = 'v1'
-    BASE_URL = 'https://search.mapzen.com'
+    SEARCH_BASE_URL = 'https://search.mapzen.com'
     BASE_PARAMS = ('sources', 'layers', 'boundary_country')
 
     # Autocomplete endpoint
+    AUTOCOMPLETE_API_BASEURL = SEARCH_BASE_URL
     AUTOCOMPLETE_API_ENDPOINT = 'autocomplete'
     AUTOCOMPLETE_API_PARAMS = BASE_PARAMS + ('text', 'focus_point_lat', 'focus_point_lon')
 
     # Search endpoint
+    SEARCH_API_BASEURL = SEARCH_BASE_URL
     SEARCH_API_ENDPOINT = 'search'
     SEARCH_API_PARAMS = AUTOCOMPLETE_API_PARAMS + (
         'size', 'boundary_rect_min_lat', 'boundary_rect_min_lon', 'boundary_rect_max_lat', 'boundary_rect_max_lon',
@@ -31,9 +33,23 @@ class MapzenAPI(object):
     )
 
     # Reverse endpoint
+    REVERSE_API_BASEURL = SEARCH_BASE_URL
     REVERSE_API_ENDPOINT = 'reverse'
     REVERSE_API_PARAMS = BASE_PARAMS + ('size', 'point_lat', 'point_lon')
-
+    
+    #Libpostal (beta) is handled on a different base URL and has no versioning
+    LIBPOSTAL_BASE_URL = 'https://libpostal.mapzen.com'
+    
+    # Parse address endpoint (libpostal)
+    PARSE_API_BASEURL = LIBPOSTAL_BASE_URL
+    PARSE_API_ENDPOINT = 'parse'
+    PARSE_API_PARAMS = ('address', 'format')
+    
+    # Expand address endpoint (libpostal)
+    EXPAND_API_BASEURL = LIBPOSTAL_BASE_URL
+    EXPAND_API_ENDPOINT = 'expand'
+    EXPAND_API_PARAMS = ('address')
+     
     # Use X-Cache to improve performance
     # Mapzen use CDN to help reduce this effect and limit the impact of common queries on its application servers.
     # See https://mapzen.com/documentation/search/api-keys-rate-limits/#caching-to-improve-performance
@@ -74,7 +90,7 @@ class MapzenAPI(object):
         """
         kwargs['text'] = check_not_empty(text)
         return self._make_request(
-            self._prepare_endpoint(self.SEARCH_API_ENDPOINT),
+            self._prepare_endpoint(self.SEARCH_API_BASEURL, self.SEARCH_API_ENDPOINT),
             self._prepare_params(kwargs, self.SEARCH_API_PARAMS)
         )
 
@@ -100,7 +116,7 @@ class MapzenAPI(object):
         kwargs['point_lat'] = point_lat
         kwargs['point_lon'] = point_lon
         return self._make_request(
-            self._prepare_endpoint(self.REVERSE_API_ENDPOINT),
+            self._prepare_endpoint(self.REVERSE_API_BASEURL, self.REVERSE_API_ENDPOINT),
             self._prepare_params(kwargs, self.REVERSE_API_PARAMS)
         )
 
@@ -133,8 +149,34 @@ class MapzenAPI(object):
         """
         kwargs['text'] = check_not_empty(text)
         return self._make_request(
-            self._prepare_endpoint(self.AUTOCOMPLETE_API_ENDPOINT),
+            self._prepare_endpoint(self.AUTOCOMPLETE_API_BASEURL, self.AUTOCOMPLETE_API_ENDPOINT),
             self._prepare_params(kwargs, self.AUTOCOMPLETE_API_PARAMS)
+        )
+        
+    def parse(self, address, **kwargs):
+        """
+        Parse an address (work out what each block of text in the address is likely to represent/mean)
+        Args:
+            address: A text string representing an address
+            **kwargs: Optional parameters
+                 format: What format to return the results in. Default: List of dicationaries, containing label and value. Alternative is keys
+        """
+        kwargs['address'] = check_not_empty(address)
+        return self._make_request(
+            self._prepare_endpoint_noversion(self.PARSE_API_BASEURL, self.PARSE_API_ENDPOINT),
+            self._prepare_params(kwargs, self.PARSE_API_PARAMS)
+        )
+        
+    def expand(self, address, **kwargs):
+        """
+        Expand an address (normalise and remove abbreviations)
+         Args:
+            address: A text string representing an address
+        """
+        kwargs['address'] = check_not_empty(address)
+        return self._make_request(
+            self._prepare_endpoint_noversion(self.EXPAND_API_BASEURL, self.EXPAND_API_ENDPOINT),
+            self._prepare_params(kwargs, self.EXPAND_API_PARAMS)
         )
 
     def use_api_key(self, api_key):
@@ -152,8 +194,12 @@ class MapzenAPI(object):
         self.x_cache = 'MISS'
         return self
 
-    def _prepare_endpoint(self, endpoint_type):
-        return '%s/%s/%s' % (self.BASE_URL, self.version, endpoint_type)
+    def _prepare_endpoint(self, endpoint_baseurl, endpoint_type):
+        return '%s/%s/%s' % (endpoint_baseurl, self.version, endpoint_type)
+
+    # Mapzen's libpostal API does not use versioning
+    def _prepare_endpoint_noversion(self, endpoint_baseurl, endpoint_type):
+        return '%s/%s' % (endpoint_baseurl, endpoint_type)
 
     def _prepare_params(self, params, allowed_params):
         _params = {'api_key': self.api_key}
