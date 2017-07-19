@@ -12,5 +12,12 @@ setup(
     author_email='doquocduy@gmail.com',
     url='https://github.com/duydo/python-mapzen',
     packages=['mapzen'],
-    zip_safe=True
+    install_requires=['six'],
+    zip_safe=True,
+    classifiers=[
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5"
+    ]
 )

@@ -1,6 +1,9 @@
 import json
-from urllib import urlencode
-from urllib2 import Request, urlopen, HTTPError
+
+from six.moves.urllib.error import HTTPError
+from six.moves.urllib.request import Request, urlopen
+from six.moves.urllib.parse import urlencode
+from six import iteritems, string_types
 
 from mapzen.exceptions import MapzenError, MapzenRateLimitError, MapzenKeyError
 
@@ -203,9 +206,9 @@ class MapzenAPI(object):
 
     def _prepare_params(self, params, allowed_params):
         _params = {'api_key': self.api_key}
-        for k, v in params.iteritems():
+        for k, v in iteritems(params):
             if k in allowed_params:
-                _params[k.replace('_', '.')] = v.encode('utf-8') if isinstance(v, unicode) else v
+                _params[k.replace('_', '.')] = v.encode('utf-8') if isinstance(v, string_types) else v
         return _params
 
     def _prepare_request(self, endpoint, params):
