@@ -220,7 +220,7 @@ class MapzenAPI(object):
         try:
             request = self._prepare_request(endpoint, params)
             response = urlopen(request)
-            return json.loads(response.read(), encoding='utf-8')
+            return json.loads(response.read().decode('utf-8'))
         except HTTPError as e:
             self._raise_exceptions_for_status(e)
         except Exception as e:
